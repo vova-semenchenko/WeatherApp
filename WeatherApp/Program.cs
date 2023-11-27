@@ -5,14 +5,14 @@ namespace WeatherApp;
 class Program
 {
     private static readonly HttpClient client = new HttpClient();
-    private static readonly string cityName = "Dnipro";
+    private static readonly string cityName = "Cherkasy";
     private static readonly string dataBasePath = "weather.db";
+    private static string? apiKey = Environment.GetEnvironmentVariable("API_KEY");
+    private static string url = $"https://api.openweathermap.org/data/2.5/weather?q={cityName}&units=metric&appid={apiKey}";
 
 
     async static Task Main(string[] args)
     {
-        string? apiKey = Environment.GetEnvironmentVariable("API_KEY");
-        string url = $"https://api.openweathermap.org/data/2.5/weather?q={cityName}&units=metric&appid={apiKey}";
 
         await GetWeather();
 
@@ -40,7 +40,7 @@ class Program
         database.InsertData(weatherData);
         Console.WriteLine("Entry added to database!");
 
-        Console.WriteLine("Reading data from database...");
+        Console.WriteLine("Reading data from database...\n");
         List<WeatherData> weatherDataFFromDatabase = database.ReadDataFromDataBase();
 
             
