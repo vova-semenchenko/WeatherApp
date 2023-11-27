@@ -42,7 +42,7 @@ namespace WeatherApp
 
         public override string ToString()
         {
-            return $"------------------\n\n{DataPreparing()}------------------\n";
+            return $"------------------\n{DataPreparing()}------------------\n";
         }
     }
 }

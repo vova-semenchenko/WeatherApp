@@ -1,22 +1,22 @@
 ﻿using System.Text.Json;
-using WeatherApp.DB;
 using WeatherApp.Model;
 
 namespace WeatherApp;
 class Program
 {
     private static readonly HttpClient client = new HttpClient();
-    private static readonly string apiKey = "3364a0b4121d1d46604a2bbd6a6f4fd6";
-    private static readonly string cityName = "Cherkasy";
-    private static readonly string url = $"https://api.openweathermap.org/data/2.5/weather?q={cityName}&units=metric&appid={apiKey}";
+    private static readonly string cityName = "Dnipro";
     private static readonly string dataBasePath = "weather.db";
 
 
     async static Task Main(string[] args)
     {
-        await getWeather();
+        string? apiKey = Environment.GetEnvironmentVariable("API_KEY");
+        string url = $"https://api.openweathermap.org/data/2.5/weather?q={cityName}&units=metric&appid={apiKey}";
 
-        async Task getWeather()
+        await GetWeather();
+
+        async Task GetWeather()
         {
             Console.WriteLine("Getting JSON...");
             var responseString = await client.GetStringAsync(url);
@@ -26,7 +26,7 @@ class Program
                JsonSerializer.Deserialize<WeatherData>(responseString);
 
             DataVilualization dataFromJson = new DataVilualization(weatherForecast);
-            Console.WriteLine($"From JSON {dataFromJson}");
+            Console.WriteLine($"Object f rom JSON {dataFromJson}");
 
             DataBase(weatherForecast);
         }
@@ -38,8 +38,9 @@ class Program
         DatabaseManager database = new DatabaseManager(dataBasePath);
 
         database.InsertData(weatherData);
+        Console.WriteLine("Entry added to database!");
 
-        Console.WriteLine("Reading Data From Data Base...");
+        Console.WriteLine("Reading data from database...");
         List<WeatherData> weatherDataFFromDatabase = database.ReadDataFromDataBase();
 
             

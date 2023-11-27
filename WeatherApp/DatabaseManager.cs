@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WeatherApp.Model;
 
-namespace WeatherApp.DB
+namespace WeatherApp
 {
     public class DatabaseManager
     {
@@ -19,7 +19,7 @@ namespace WeatherApp.DB
         public DatabaseManager(string connectionStrinbg)
         {
             this.dataBaseName = connectionStrinbg;
-            this.connectionString = $"Data Source={connectionStrinbg};Version=3;";
+            this.connectionString = $"Data Source={dataBaseName};Version=3;";
             this.connection = new SQLiteConnection(connectionString);
 
             InitializeDatabase();
