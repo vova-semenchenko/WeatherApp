@@ -363,4 +363,5 @@ MigrationBackup/
 FodyWeavers.xsd
 
 # not ignore db file
-bin/Debug/net7.0/weather.db
+bin/Debug/net7.0/*
+!bin/Debug/net7.0/weather.db
